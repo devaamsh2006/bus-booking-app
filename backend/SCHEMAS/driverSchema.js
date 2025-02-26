@@ -58,6 +58,14 @@ const driverSchema=new mongoose.Schema(
         yearsOfExperience:{
             type:Number,
             required:true
+        },
+        fullName:{
+            type:String,
+            required:true
+        },
+        imageUrl:{
+            type:String,
+            required:true
         }
     }
 )
