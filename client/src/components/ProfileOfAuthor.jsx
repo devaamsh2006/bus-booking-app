@@ -9,7 +9,6 @@ function ProfileOfAuthor() {
   const [salary,setSalary]=useState(0);
   const noOfBuses=0;
   const {currentUser}=useContext(userDetails);
-  console.log(currentUser);
   return (
     <div className='w-full relative p-5 flex flex-col gap-5 h-[75vh]'>
       <div className='flex justify-center gap-4 items-center w-full z-10'>
@@ -38,7 +37,7 @@ function ProfileOfAuthor() {
         <div>
         <h1 className='text-2xl font-semibold z-10'>Bus stats:</h1>
         <h1 className='flex items-center gap-2 z-10'><RiBusLine className='scale-[1.5]'/>No.of Buses Assigned:{noOfBuses}</h1>
-        <h1 className='flex items-center gap-2 z-10'>Salaray:{salary}</h1>
+        <h1 className='flex items-center gap-2 z-10'>Salary:{salary}</h1>
         </div>
       }
       

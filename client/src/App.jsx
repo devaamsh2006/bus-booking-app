@@ -91,8 +91,22 @@ function App() {
           ]
           },
           {
-          path:'driver/:driverId',
-          element:<Driver />
+          path:'driver',
+          element:<Driver />,
+          children:[
+            {
+              path:':driverId',
+              element:<ProfileOfAuthor />
+            },
+            {
+              path:'accept',
+              element:<RequestsOfOperator />
+            },
+            {
+              path:'follow',
+              element:<FollowOfOperator />
+            }
+          ]
           }
         ]
     }
