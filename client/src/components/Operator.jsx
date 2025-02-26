@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { userDetails } from '../context/userAuthentication'
+import { userDetails } from '../context/UserAuthentication';
 
 function Operator() {
   const {currentUser}=useContext(userDetails);

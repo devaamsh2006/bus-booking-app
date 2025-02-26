@@ -92,7 +92,7 @@ function App() {
           },
           {
           path:'driver',
-          element:<Driver />,
+          element:<Operator />,
           children:[
             {
               path:':driverId',
