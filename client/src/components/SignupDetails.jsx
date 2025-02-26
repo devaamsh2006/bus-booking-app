@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useClerk, useUser } from '@clerk/clerk-react';
 function SignupDetails() {
   const {isSignedIn,user,isLoaded}=useUser();
+  const {currentUser,setCurrentuser}=useContext(userDetails);
   const {register,handleSubmit,formState:{errors}}=useForm();
   const navigate=useNavigate();
   const [nowuser,setUser]=useState(null);
