@@ -1,0 +1,85 @@
+const mongoose=require('mongoose');
+
+//creating a schema for new bus
+const newSchema=new mongoose.Schema(
+    {
+        busId:{
+            type:String,
+            required:true  
+        },
+        route:{
+            type:[
+                {
+                    source:{
+                        type:String,
+                        required:true
+                    },
+                    destination:{
+                        type:String,
+                        required:true
+                    },
+                    intermediate:{
+                        type:[
+                            {
+                                station:{
+                                    type:String,
+                                    required:true,
+                                    default:null
+                                }
+                            }
+                        ],
+                        default:[]
+                    }
+                }]},
+        price:{
+            type:Number,
+            required:true
+        },
+        Ac:{
+            type:Boolean,
+            required:true
+        },
+        seats:{
+            type:Number,
+            required:true
+        },
+        rows:{
+            type:Number,
+            required:true
+        },
+        rating:{
+            type:Number,
+            required:true,
+            default:0
+        },
+        username:{
+            type:String,
+            required:true
+        },
+        stTime:{
+            type:String,
+            required:true
+        },
+        drivername:{
+            type:String,
+            required:true
+        },
+        busNo:{
+            type:String,
+            required:true
+        },
+        cancel:{
+            type:Boolean,
+            required:true,
+            default:true
+        },
+        insurance:{
+            type:Boolean,
+            required:true
+        }
+    }
+)
+//creating a collection for new bus
+const newBusModel=mongoose.model('newbus',newSchema);
+//exporting new bus collection
+module.exports=newBusModel;

@@ -1,0 +1,32 @@
+.detailsleft {
+    animation: scrolleft 1s ease-in-out both;
+    animation-timeline: view(90% 20%);
+    color: white;
+}
+
+@keyframes scrolleft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px)
+    }
+}
+
+.detailsright {
+    animation: scrolright 1s ease-in-out both;
+    animation-timeline: view(90% 20%)
+}
+
+@keyframes scrolright {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px)
+    }
+}

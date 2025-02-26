@@ -1,0 +1,67 @@
+http://localhost:4000/user/users
+
+###
+http://localhost:4000/user/buses
+Content-Type: application/json
+
+{
+    "source":"hyderabad",
+    "destination":"warangal",
+    "date":"2006-10-22"
+}
+
+###
+put http://localhost:4000/user/confirm
+Content-Type: application/json
+
+{
+    "busId":"1738524503",
+    "date":"2006-10-22",
+    "bookedSeat":"4"
+}
+
+###
+put http://localhost:4000/user/cancelconfirm
+Content-Type: application/json
+
+{
+    "busId":"1738524503",
+    "date":"2006-10-22",
+    "bookedSeat":"1"
+}
+
+###to book seat
+put http://localhost:4000/user/book
+Content-Type: application/json
+
+{
+    "busId":"1738524503",
+    "bookedSeat":"1",
+    "source":"kazipet",
+    "destination":"warangal",
+    "userId":"45678",
+    "date":"2006-10-22",
+    "action":"book"
+}
+
+###to cancel seat
+put http://localhost:4000/user/book
+Content-Type: application/json
+
+{
+    "busId":"1738524503",
+    "bookedSeat":"6",
+    "source":"kazipet",
+    "destination":"warangal",
+    "userId":"45678",
+    "date":"2006-10-22",
+    "action":"cancel"
+}
+
+###
+http://localhost:4000/user/bookings
+Content-Type: application/json
+
+{
+    "userId":"45678"
+}

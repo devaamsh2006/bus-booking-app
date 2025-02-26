@@ -1,0 +1,10 @@
+http://localhost:4000/admin/admins
+
+###
+put http://localhost:4000/admin/accept
+Content-Type: application/json
+
+{
+    "username":"devamsh2006@gmail.com",
+    "accepted":true
+}
