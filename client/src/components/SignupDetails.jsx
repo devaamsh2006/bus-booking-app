@@ -3,34 +3,35 @@ import {useForm} from 'react-hook-form';
 import {useLocation,useNavigate} from 'react-router-dom';
 import { userDetails } from '../context/UserAuthentication';
 import axios from 'axios';
+import { useClerk, useUser } from '@clerk/clerk-react';
 function SignupDetails() {
+  const {isSignedIn,user,isLoaded}=useUser();
   const {register,handleSubmit,formState:{errors}}=useForm();
-  const {currentUser,setCurrentUser}=useContext(userDetails);
   const navigate=useNavigate();
-  const [user,setUser]=useState(null);
+  const [nowuser,setUser]=useState(null);
   function settingUser(obj){
       setUser(obj.role);
   }
 
   async function handleDetails(credObj){
     credObj.userId=Date.now();
-    credObj.username=currentUser.email;
+    credObj.username=user?.emailAddresses[0].emailAddress;
     credObj.dateOfJoining=new Date();
-    credObj.imageUrl=currentUser.imageUrl;
-    credObj.fullName=currentUser.fullName;
-    if(user==='user'){
+    credObj.imageUrl=user?.imageUrl;
+    credObj.fullName=user?.fullName;
+    if(nowuser==='user'){
       const res=await axios.post('http://localhost:4000/user/signup',{user:credObj}); 
       if(res.data.message==='user created'){
         navigate('/');
       }
-    }else if(user==='operator'){
+    }else if(nowuser==='operator'){
       credObj.operatorId=Date.now();      
       const res=await axios.post('http://localhost:4000/operator/signup',{user:credObj}); 
       console.log(res)
       if(res.data.message==='operator created'){
         navigate('/');
       }
-    }else if(user==='driver'){
+    }else if(nowuser==='driver'){
       credObj.driverId=Date.now();
       credObj.yearsOfExperience=credObj.experience;
       delete credObj.experience;
@@ -48,7 +49,7 @@ function SignupDetails() {
       <div className="absolute inset-0 backdrop-blur-md"></div>
       <div className='absolute top-1/4 left-1/3 w-1/3 p-5  flex flex-col justify-center items-center gap-5 bg-white rounded-md'>
       {
-      user===null&&
+      nowuser===null&&
       <>
       <form onSubmit={handleSubmit(settingUser)} className='flex flex-col gap-5'>
       <div className='flex flex-col justify-center items-center gap-5'>
@@ -76,7 +77,7 @@ function SignupDetails() {
       }
       <form onSubmit={handleSubmit(handleDetails)} className='flex flex-col gap-5 justify-center items-center'>
       {
-        user!==null&&
+        nowuser!==null&&
         <>
         <div className='flex flex-col gap-3'>
         <h1 className='text-2xl font-bold '>Fill Your Details</h1>
@@ -89,7 +90,7 @@ function SignupDetails() {
         </>
       }
       {
-        user==='driver'&&
+        nowuser==='driver'&&
         <>
         <input type="text" {...register('licenceno',{required:true})} id="licenceno" placeholder='Licence Number' className='p-3 border-2 rounded-lg focus:outline-none focus:border-slate-600 border-slate-400' />
         {errors.licenceno && <span className='text-red-500'>{errors.licenceno.message}</span>}
@@ -100,7 +101,7 @@ function SignupDetails() {
         </>
       }
       {
-        user==='operator'&&
+        nowuser==='operator'&&
         <>
         <input type="text" {...register('address',{required:true})} id="address" placeholder='Address' className='p-3 border-2 rounded-lg focus:outline-none focus:border-slate-600 border-slate-400' />
         {errors.address && <span className='text-red-500'>{errors.address.message}</span>}
@@ -110,7 +111,7 @@ function SignupDetails() {
         {errors.location && <span className='text-red-500'>{errors.location.message}</span>}
         </>
       }
-      {user!==null&& <button type="submit" className='p-3 rounded-sm bg-sky-400 text-white hover:bg-sky-500 transition-all'>Submit</button>}
+      {nowuser!==null&& <button type="submit" className='p-3 rounded-sm bg-sky-400 text-white hover:bg-sky-500 transition-all'>Submit</button>}
       </form>
       </div>
     </div>
