@@ -1,16 +1,17 @@
-import React, { useEffect ,useRef} from 'react';
+import React, { useEffect ,useRef, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import "./Buses.css";
 
 function Buses() {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const [routes,setRoutes]=useState([]);
 
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
-        const routes = await axios.get('http://localhost:4000/user/routes');
-        console.log(routes.data);
+        const routePresent = await axios.get('http://localhost:4000/user/routes');
+        setRoutes(routePresent.data.payLoad);
       } catch (error) {
         console.error("Error fetching routes:", error);
       }
@@ -18,6 +19,8 @@ function Buses() {
 
     fetchRoutes();
   }, []);
+
+
 
   let handleDetails = (credObj) => {
     console.log(credObj);
@@ -36,7 +39,17 @@ function Buses() {
         className="w-1/2 p-4 rounded-xl focus:outline-none focus:border-slate-800 
                    border-2 border-slate-500" 
         placeholder="From" 
+        list='source'
       />
+      <datalist id="source">
+        {
+          routes.length!==0 &&
+          routes.map(route=>{
+           return <option value={`${route.station}`} />
+          })
+        }
+        
+      </datalist>
   
       <h1 className="font-semibold text-xl">TO</h1>
   
@@ -44,7 +57,19 @@ function Buses() {
         className="w-1/2 p-4 rounded-xl focus:outline-none focus:border-slate-800 
                    border-2 border-slate-500" 
         placeholder="To" 
+        list='destination'
       />
+      <datalist id="destination">
+        {
+          routes.length!==0 &&
+          routes.map(route=>{
+           return <option value={`${route.station}`} />
+          })
+        }
+        
+      </datalist>
+
+
       </div>
       <input type="date" {...register('date')} id="" className='w-1/2 flex justify-center border-2 border-slate-500 p-4 rounded-xl focus:outline-none focus:border-slate-800' />
       <button className="bg-black text-white rounded-3xl p-3 hover:bg-gray-800 transition">

@@ -1,3 +1,20 @@
 .active{
     background-color: #e2e8f0!important;
 }
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+  opacity: 0;
+}
+
+/* Hide the dropdown arrow in Firefox */
+input[list]::-moz-selection {
+  background-color: transparent;
+}
+
+/* General solution attempt for other browsers */
+input[list] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
