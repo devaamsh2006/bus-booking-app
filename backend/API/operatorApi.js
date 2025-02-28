@@ -131,12 +131,15 @@ operatorApp.post('/newbus',expressAsyncHandler(async(req,res)=>{
 }))
 
 //operator to get buses
-operatorApp.get('/buses',expressAsyncHandler(async(req,res)=>{
+operatorApp.post('/buses',expressAsyncHandler(async(req,res)=>{
     try{
+        const credObj=req.body;
+        console.log(credObj);
         const operator=await operatorModel.findOne({username:credObj.username});
+        console.log(operator);
         if(operator.accepted===true){
         const operatorname=req.body;
-        let result=await newBusModel.findOne({username:operatorname.username});
+        let result=await newBusModel.find({username:operatorname.username});
         res.send({message:"buses found",payLoad:result});
     }else{
         res.send({message:"wait"});
