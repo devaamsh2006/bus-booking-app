@@ -2,11 +2,12 @@ import React, { useEffect ,useRef, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import "./Buses.css";
+import { useNavigate } from 'react-router-dom';
 
 function Buses() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [routes,setRoutes]=useState([]);
-
+  const navigate=useNavigate();
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
@@ -21,9 +22,8 @@ function Buses() {
   }, []);
 
 
-
   let handleDetails = (credObj) => {
-    console.log(credObj);
+    navigate('/busesavailable',{state:credObj});
   };
 
   return(
