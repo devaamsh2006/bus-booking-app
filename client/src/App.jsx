@@ -39,7 +39,7 @@ function App() {
           element:<Home />
         },
         {
-          path:'buses',
+          path:'searchbuses',
           element:<Buses />
         },
         {

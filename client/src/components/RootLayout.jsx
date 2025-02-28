@@ -5,7 +5,6 @@ import Footer from './Footer';
 import {ClerkProvider} from '@clerk/clerk-react';
 
 function RootLayout() {
-  // const location = useLocation()
 
   const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 

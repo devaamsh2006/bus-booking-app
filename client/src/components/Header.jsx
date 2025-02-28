@@ -29,16 +29,21 @@ function Header() {
             isSignedIn
             ?
             <>
-            {currentUser.userType==='user'&&<>
-            <NavLink to="buses" className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Buses</NavLink>
+            {currentUser.userType==='user'&&
+            <>
+            <NavLink to="searchbuses" className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Buses</NavLink>
             <NavLink to={`user/${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>profile</NavLink>
-            </>}
-            {currentUser.userType==='operator'&&
+            </>
+            }
+            {
+            currentUser.userType==='operator'&&
             <>
             <NavLink to={`operator/profile/${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Profile</NavLink>
             <NavLink to={`operator/buses/${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Buses</NavLink>
-            </>}
-            {currentUser.userType==='driver'&&<><NavLink to={`driver/${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Driver</NavLink></>}
+            </>
+            }
+            {
+            currentUser.userType==='driver'&&<><NavLink to={`driver/${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Driver</NavLink></>}
             <button onClick={handleSignOut} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>SignOut</button>
             </>
             :<>
@@ -46,7 +51,6 @@ function Header() {
             <NavLink to="signup" className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'><CiFaceSmile className='scale-[1.2]'/>SignUp</NavLink>
             </>
             }
-            
         </div>
     </div>
   )
