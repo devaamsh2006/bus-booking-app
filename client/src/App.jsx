@@ -21,6 +21,7 @@ import BusesOfOperator from './components/BusesOfOperator';
 import NewBus from './components/NewBus';
 import TicketHistory from './components/TicketHistory';
 import BusesAvailable from './components/BusesAvailable';
+import AddTrips from './components/AddTrips';
 
 function App() {
   const {currentuser}=useContext(userDetails);
@@ -91,6 +92,10 @@ function App() {
               {
                 path:'newbus',
                 element:<NewBus />
+              },
+              {
+                path:'addtrips',
+                element:<AddTrips />
               }
             ]
             }
