@@ -9,8 +9,14 @@ function Operator() {
     <div className='flex py-5 w-3/4 flex-col items-center border-2 border-black rounded-lg'>
       <div className="flex border-b-2 pb-3 border-black justify-around w-full">
         <NavLink to={`${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Profile</NavLink>
+        {(currentUser.userType==='driver'||currentUser.userType==='operator') ?
+        <div>
         <NavLink to="accept" className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Requests</NavLink>
         <NavLink to="follow" className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Follow</NavLink>
+        </div>
+        :
+        <NavLink to="tickethistory" className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Ticket History</NavLink>
+        }
       </div>
       <div className='relative w-full'>
       <div 

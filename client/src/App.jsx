@@ -19,6 +19,7 @@ import './App.css';
 import OpeartorBuses from './components/OpeartorBuses';
 import BusesOfOperator from './components/BusesOfOperator';
 import NewBus from './components/NewBus';
+import TicketHistory from './components/TicketHistory';
 
 function App() {
   const {currentuser}=useContext(userDetails);
@@ -107,6 +108,20 @@ function App() {
               element:<FollowOfOperator />
             }
           ]
+          },
+          {
+            path:'user',
+            element:<Operator />,
+            children:[
+              {
+                path:':userid',
+                element:<ProfileOfAuthor />
+              },
+              {
+                path:'tickethistory',
+                element:<TicketHistory />
+              }
+            ]
           }
         ]
     }

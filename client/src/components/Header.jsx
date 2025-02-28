@@ -29,7 +29,10 @@ function Header() {
             isSignedIn
             ?
             <>
-            {currentUser.userType==='user'&&<><NavLink to="buses" className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Buses</NavLink></>}
+            {currentUser.userType==='user'&&<>
+            <NavLink to="buses" className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Buses</NavLink>
+            <NavLink to={`user/${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>profile</NavLink>
+            </>}
             {currentUser.userType==='operator'&&
             <>
             <NavLink to={`operator/profile/${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Profile</NavLink>

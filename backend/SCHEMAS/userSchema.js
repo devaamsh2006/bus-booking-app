@@ -30,6 +30,14 @@ const userSchema=new mongoose.Schema(
         dateOfJoining:{
             type:Date,
             required:true
+        },
+        fullName:{
+            type:String,
+            required:true
+        },
+        imageUrl:{
+            type:String,
+            required:true
         }
     }
 )
