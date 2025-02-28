@@ -115,7 +115,6 @@ operatorApp.put('/adddrivers',expressAsyncHandler(async(req,res)=>{
 operatorApp.post('/newbus',expressAsyncHandler(async(req,res)=>{
     try{
         const credObj=req.body;
-        console.log(credObj);
         const operator=await operatorModel.findOne({username:credObj.username});
         if(operator.accepted===true){
         let newbus=req.body;
@@ -134,9 +133,7 @@ operatorApp.post('/newbus',expressAsyncHandler(async(req,res)=>{
 operatorApp.post('/buses',expressAsyncHandler(async(req,res)=>{
     try{
         const credObj=req.body;
-        console.log(credObj);
         const operator=await operatorModel.findOne({username:credObj.username});
-        console.log(operator);
         if(operator.accepted===true){
         const operatorname=req.body;
         let result=await newBusModel.find({username:operatorname.username});
@@ -153,7 +150,6 @@ operatorApp.post('/buses',expressAsyncHandler(async(req,res)=>{
 operatorApp.post('/addbus',expressAsyncHandler(async(req,res)=>{
     try{
         const credDetails=req.body;
-        console.log(credDetails);
         const dateArray=[];
         for(let date=new Date(credDetails.stDate);date<=new Date(credDetails.endDate);date.setDate(date.getDate()+1)){
             dateArray.push(new Date(date));
