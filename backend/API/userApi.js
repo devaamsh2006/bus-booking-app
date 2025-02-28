@@ -43,7 +43,7 @@ userApp.post('/signup',expressAsyncHandler(async(req,res)=>{
 userApp.post('/login',expressAsyncHandler(async(req,res)=>{
     try{
         const credEmail=req.body.email;
-        const user=await userModel.find({username:credEmail});
+        const user=await userModel.findOne({username:credEmail});
         if(user.length!==0){
         res.send({message:'login success',payLoad:user,userType:'user'});
         }else{
