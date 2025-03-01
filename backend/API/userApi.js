@@ -55,7 +55,7 @@ userApp.post('/login',expressAsyncHandler(async(req,res)=>{
 }))
 
 //to get all the buses from source and destination
-userApp.get('/buses',expressAsyncHandler(async(req,res)=>{
+userApp.post('/buses',expressAsyncHandler(async(req,res)=>{
     try{
     const details=req.body;
     const busesList=await newBusModel.find({$or:[
@@ -68,9 +68,9 @@ userApp.get('/buses',expressAsyncHandler(async(req,res)=>{
     busesList.map(bus=>busIdList.push(bus.busId));
     const buses=await busInfoModel.find({$and:[{busId:{$in:busIdList}},{date:details.date}]})
     if(buses.length>0){
-    res.send({message:"buses found",payLoad:buses});
+    res.send({message:"buses found",payLoad:buses,busDetails:busesList});
     }else{
-    res.send({message:"no buses found",payLoad:buses});
+    res.send({message:"no buses found",payLoad:buses,busDetails:busesList});
     }
     }
     catch(err){

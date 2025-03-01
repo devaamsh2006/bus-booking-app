@@ -36,9 +36,21 @@ function AddTrips() {
     </ul>
     <form onSubmit={handleSubmit(handletrips)} className='flex flex-col gap-3'>
     <h1 className='text-lg font-semibold'>Start Date:</h1>
-    <input type='date' {...register('stDate',{required:true})} className='border-slate-400 rounded-lg w-1/4 p-2 border-2 focus:outline-none focus:border-slate-700' />
+    <input type='date' {...register('stDate',{required:true,setValueAs: (value) => {
+                if (value) {
+                    const [year, month, day] = value.split('-');
+                    return `${day}-${month}-${year}`;
+                }
+                return value;
+            }})} className='border-slate-400 rounded-lg w-1/4 p-2 border-2 focus:outline-none focus:border-slate-700' />
     <h1 className='text-lg font-semibold'>End Date:</h1>
-    <input type='date' {...register('endDate',{required:true})} className='border-slate-400 rounded-lg w-1/4 p-2 border-2 focus:outline-none focus:border-slate-700' />
+    <input type='date' {...register('endDate',{required:true,setValueAs: (value) => {
+                if (value) {
+                    const [year, month, day] = value.split('-');
+                    return `${day}-${month}-${year}`;
+                }
+                return value;
+            }})} className='border-slate-400 rounded-lg w-1/4 p-2 border-2 focus:outline-none focus:border-slate-700' />
     <button className='bg-black p-2 rounded-md text-white w-1/6'>Add Trips</button>
     </form>
     {presentStatus==='Trips Added Successfully' && <p className='text-green-400 font-medium text-lg'>Trips Added Successfully</p>  }

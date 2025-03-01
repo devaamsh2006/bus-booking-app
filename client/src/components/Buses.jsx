@@ -71,7 +71,13 @@ function Buses() {
 
 
       </div>
-      <input type="date" {...register('date')} id="" className='w-1/2 flex justify-center border-2 border-slate-500 p-4 rounded-xl focus:outline-none focus:border-slate-800' />
+      <input type="date" {...register('date',{setValueAs: (value) => {
+                if (value) {
+                    const [year, month, day] = value.split('-');
+                    return `${day}-${month}-${year}`;
+                }
+                return value;
+            }})} id="" className='w-1/2 flex justify-center border-2 border-slate-500 p-4 rounded-xl focus:outline-none focus:border-slate-800' />
       <button className="bg-black text-white rounded-3xl p-3 hover:bg-gray-800 transition">
         Search Buses
       </button>

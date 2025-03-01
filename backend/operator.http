@@ -91,7 +91,7 @@ Content-Type: application/json
 }
 
 ###
-http://localhost:4000/operator/buses
+post http://localhost:4000/operator/buses
 Content-Type: application/json
 
 {
@@ -103,9 +103,9 @@ post http://localhost:4000/operator/addbus
 Content-Type: application/json
 
 {
-    "stDate":"2006-10-22",
-    "endDate":"2006-11-30",
-    "busId":"1738524503"
+    "stDate":"2006-03-02",
+    "endDate":"2006-04-05",
+    "busId":"1740216386261"
 }
 
 ###
