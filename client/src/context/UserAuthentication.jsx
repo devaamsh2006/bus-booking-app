@@ -12,7 +12,6 @@ function UserAuthentication({children}){
     });
     useEffect(()=>{
         const userInStorage=localStorage.getItem('currentUser');
-        console.log(JSON.parse(userInStorage));
         if(userInStorage){
             setCurrentUser(JSON.parse(userInStorage));
         }

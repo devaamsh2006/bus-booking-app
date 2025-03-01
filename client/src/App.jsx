@@ -22,6 +22,7 @@ import NewBus from './components/NewBus';
 import TicketHistory from './components/TicketHistory';
 import BusesAvailable from './components/BusesAvailable';
 import AddTrips from './components/AddTrips';
+import BookBus from './components/BookBus';
 
 function App() {
   const {currentuser}=useContext(userDetails);
@@ -46,6 +47,10 @@ function App() {
         {
           path:'busesavailable',
           element:<BusesAvailable />
+        },
+        {
+          path:'bookbus',
+          element:<BookBus />
         },
         {
           path:'login',
