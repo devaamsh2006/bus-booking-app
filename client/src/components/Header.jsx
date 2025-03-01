@@ -17,6 +17,7 @@ function Header() {
   const {signOut}=useClerk();
   async function handleSignOut(){
     await signOut();
+    localStorage.removeItem('currentUser');
   }
 
   return (

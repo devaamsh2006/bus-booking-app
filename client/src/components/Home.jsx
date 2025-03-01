@@ -44,6 +44,7 @@ function Home() {
             userId:res.data?.payLoad.userId||res.data?.payLoad.operatorId||res.data?.payLoad.driverId,
             location:res.data?.payLoad.location
           });
+          localStorage.setItem('currentUser',JSON.stringify(currentUser));
         }
         return found;
       }

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 export const userDetails=createContext();
 function UserAuthentication({children}){
     const [currentUser,setCurrentUser]=useState({
@@ -10,6 +10,13 @@ function UserAuthentication({children}){
         userId:'',
         location:''
     });
+    useEffect(()=>{
+        const userInStorage=localStorage.getItem('currentUser');
+        console.log(JSON.parse(userInStorage));
+        if(userInStorage){
+            setCurrentUser(JSON.parse(userInStorage));
+        }
+    },[]);
     return(
     <userDetails.Provider value={{currentUser,setCurrentUser}}>
         {children}
