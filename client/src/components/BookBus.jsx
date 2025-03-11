@@ -1,63 +1,96 @@
-import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import DriverIcon from './DriverIcon';
+import axios from 'axios';
+import { userDetails } from '../context/UserAuthentication';
 
 function BookBus() {
+    const navigate = useNavigate();
+    const { currentUser } = useContext(userDetails);
     const { state } = useLocation();
     const noOfSeats = state.busDetails[0].seats;
     const noOfRows = state.busDetails[0].rows;
-    
-    // Create a state to track selected seats
     const [selectedSeats, setSelectedSeats] = useState([]);
-    
-    // Function to handle seat selection
+    const [availableSeats, setAvailableSeats] = useState([]); // Fixed useState declaration
+
+    // Fetch available seats
+    const handleSeats = async () => {
+        try {
+            state.route.busId = state.busDetails[0]?.busId;
+            const res = await axios.post('http://localhost:4000/user/availableSeats', state.route);
+            setAvailableSeats(res.data.availableSeats); // Fixed missing `data`
+        } catch (err) {
+            console.error("Error fetching available seats", err);
+        }
+    };
+
+    useEffect(() => {
+        handleSeats();
+    }, []);
+
+    // Toggle seat selection
     const toggleSeatSelection = (seatNumber) => {
         if (selectedSeats.includes(seatNumber)) {
-            // If seat is already selected, unselect it
             setSelectedSeats(selectedSeats.filter(seat => seat !== seatNumber));
         } else {
-            // If seat is not selected, select it
             setSelectedSeats([...selectedSeats, seatNumber]);
         }
     };
-    
-    // Function to determine seat color
-    const getSeatColor = (seatNumber) => {
-        return selectedSeats.includes(seatNumber) ? 'bg-green-500' : 'bg-white';
+
+    // Book tickets
+    const bookTickets = async () => {
+        let details = {
+            busId: state?.busDetails[0]?.busId,
+            date: state.route.date,
+            selectedSeats,
+            source: state.route.source,
+            destination: state.route.destination,
+            userId: currentUser.userId,
+            action: "book"
+        };
+        const res = await axios.put('http://localhost:4000/user/book', details);
+        if (res.data.message === "Tickets booked successfully") {
+            navigate('/');
+        }
     };
-    
-    // Component for a single seat
+
+    // Get seat color based on availability
+    const getSeatColor = (seatNumber) => {
+        if (selectedSeats.includes(seatNumber)) return 'bg-green-500'; // Selected seats: Green
+        return availableSeats.includes(seatNumber) ? 'bg-white' : 'bg-red-500'; // Available: White, Booked: Red
+    };
+
+    // Seat component
     const Seat = ({ seatNumber }) => (
-        <div 
-            className={`border-2 w-10 h-10 border-black rounded-md cursor-pointer ${getSeatColor(seatNumber)} flex items-center justify-center text-xs`}
-            onClick={() => toggleSeatSelection(seatNumber)}
+        <div
+            className={`border-2 w-10 h-10 border-black rounded-md cursor-pointer flex items-center justify-center text-xs ${getSeatColor(seatNumber)}`}
+            onClick={() => availableSeats.includes(seatNumber) && toggleSeatSelection(seatNumber)} // Prevent selecting booked seats
         >
             {seatNumber}
         </div>
     );
-  
+
     return (
-        <div className='flex p-10 w-full justify-center items-center'>
+        <div className='flex gap-10 p-10 w-full justify-center items-center relative'>
             <div className='flex flex-col min-h-[70vh] gap-7 p-3 border-2 border-black rounded-md'>
                 <div className='border-2 w-10 h-10 border-black rounded-md'>
                     <DriverIcon className='scale-[1.5]' />
                 </div>
-                
+
+                {/* Seat Layout */}
                 {noOfSeats % 4 === 0 ? (
                     <>
                         {Array.from({ length: noOfRows }).map((_, rowIndex) => {
-                            // Calculate starting seat number for this row
                             const rowStartSeat = rowIndex * 4 + 1;
-                            
                             return (
                                 <div key={rowIndex} className='flex gap-12'>
                                     <div className='flex gap-1'>
-                                        <Seat key={`seat-${rowStartSeat}`} seatNumber={rowStartSeat} />
-                                        <Seat key={`seat-${rowStartSeat+1}`} seatNumber={rowStartSeat+1} />
+                                        <Seat seatNumber={rowStartSeat} />
+                                        <Seat seatNumber={rowStartSeat + 1} />
                                     </div>
                                     <div className='flex gap-1'>
-                                        <Seat key={`seat-${rowStartSeat+2}`} seatNumber={rowStartSeat+2} />
-                                        <Seat key={`seat-${rowStartSeat+3}`} seatNumber={rowStartSeat+3} />
+                                        <Seat seatNumber={rowStartSeat + 2} />
+                                        <Seat seatNumber={rowStartSeat + 3} />
                                     </div>
                                 </div>
                             );
@@ -66,32 +99,27 @@ function BookBus() {
                 ) : (
                     <>
                         {Array.from({ length: noOfRows }).map((_, rowIndex) => {
-                            // For regular rows, 4 seats per row
                             const rowStartSeat = rowIndex * (rowIndex === noOfRows - 1 ? 0 : 4) + 1;
-                            // For the last row with 5 seats, calculate the starting seat number
                             const lastRowStartSeat = (noOfRows - 1) * 4 + 1;
-                            
+
                             return (
                                 <div key={rowIndex} className='flex gap-12'>
                                     {rowIndex !== noOfRows - 1 ? (
                                         <>
                                             <div className='flex gap-1'>
-                                                <Seat key={`seat-${rowStartSeat}`} seatNumber={rowStartSeat} />
-                                                <Seat key={`seat-${rowStartSeat+1}`} seatNumber={rowStartSeat+1} />
+                                                <Seat seatNumber={rowStartSeat} />
+                                                <Seat seatNumber={rowStartSeat + 1} />
                                             </div>
                                             <div className='flex gap-1'>
-                                                <Seat key={`seat-${rowStartSeat+2}`} seatNumber={rowStartSeat+2} />
-                                                <Seat key={`seat-${rowStartSeat+3}`} seatNumber={rowStartSeat+3} />
+                                                <Seat seatNumber={rowStartSeat + 2} />
+                                                <Seat seatNumber={rowStartSeat + 3} />
                                             </div>
                                         </>
                                     ) : (
                                         <>
                                             <div className='flex gap-1'>
                                                 {Array.from({ length: 5 }).map((_, seatIndex) => (
-                                                    <Seat 
-                                                        key={`seat-${lastRowStartSeat+seatIndex}`} 
-                                                        seatNumber={lastRowStartSeat+seatIndex} 
-                                                    />
+                                                    <Seat key={`seat-${lastRowStartSeat + seatIndex}`} seatNumber={lastRowStartSeat + seatIndex} />
                                                 ))}
                                             </div>
                                         </>
@@ -102,8 +130,27 @@ function BookBus() {
                     </>
                 )}
             </div>
+
+            {/* Booking Summary */}
+            {selectedSeats.length > 0 && (
+                <div className='p-5 flex flex-col gap-3 border-2 border-slate-700 rounded-xl'>
+                    <p className='font-bold text-lg'>Total Price: {selectedSeats.length * state?.busDetails[0]?.price}</p>
+                    <button onClick={bookTickets} className='bg-sky-400 p-3 shadow hover:shadow-sky-400 hover:bg-sky-500 transition-colors text-white rounded-lg'>Book Now</button>
+                </div>
+            )}
+
+            <div className='absolute top-5 right-5 border-2 border-black rounded-xl p-4 flex flex-col gap-2'>
+              <div className='flex gap-2 items-center'>
+                <div className='w-3 h-3 rounded-sm bg-red-500 border-2 border-black'></div>
+                <p>Booked</p>
+              </div>
+              <div className='flex gap-2 items-center'>
+                <div className='w-3 h-3 rounded-sm bg-white border-2 border-black'></div>
+                <p>Available</p>
+              </div>
+            </div>
         </div>
-    )
+    );
 }
 
-export default BookBus
+export default BookBus;

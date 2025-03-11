@@ -20,7 +20,8 @@ function BusesAvailable() {
     },[]);
     
     function handlebus(bus,index){
-        navigate(`/bookbus?id=${bus.busId}`,{state:{bus,busDetails}});
+      const route=state;
+        navigate(`/bookbus?id=${bus.busId}`,{state:{route,bus,busDetails}});
     }
 
   return (
