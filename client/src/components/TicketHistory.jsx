@@ -19,7 +19,7 @@ function TicketHistory() {
     <div className='flex z-10 flex-col min-h-[80vh] p-5 gap-5 bg-gray-50'>
       {tickets.length === 0 ? (
         <div className='flex items-center justify-center h-60'>
-          <p className='text-gray-500 text-xl font-medium'>No History Found</p>
+          <p className='text-gray-500 text-xl font-medium z-10'>No History Found</p>
         </div>
       ) : (
         tickets?.map((ticket, index) => (
