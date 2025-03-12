@@ -16,6 +16,7 @@ const busInfoModel=require('../SCHEMAS/busInfoSchema');
 
 //importing station collection
 const StationModel = require('../SCHEMAS/Stations');
+const ticketModel = require('../SCHEMAS/ticketHistorySchema');
 
 userApp.get('/users',expressAsyncHandler(async(req,res)=>{
     res.send({message:"users Api"});
@@ -296,4 +297,16 @@ userApp.get('/routes',expressAsyncHandler(async(req,res)=>{
         res.send({message:"error occured",payLoad:err.message});
     }
 }))
+
+userApp.post('/tickethistory',expressAsyncHandler(async(req,res)=>{
+    try{
+        const credObj = req.body;
+        const doc=new ticketModel(credObj);
+        const result= await doc.save();
+        res.send({message:"tickets added",payLoad:result})
+    }catch(err){
+        res.send({message:"error occurred",payLoad:err.message})
+    }
+}))
+
 module.exports=userApp;

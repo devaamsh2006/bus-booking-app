@@ -12,7 +12,6 @@ function BookBus() {
     const noOfRows = state.busDetails[0].rows;
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [availableSeats, setAvailableSeats] = useState([]); // Fixed useState declaration
-
     // Fetch available seats
     const handleSeats = async () => {
         try {
@@ -50,7 +49,20 @@ function BookBus() {
         };
         const res = await axios.put('http://localhost:4000/user/book', details);
         if (res.data.message === "Tickets booked successfully") {
-            navigate('/');
+            let credObj={};
+            credObj.userId=currentUser.userId;
+            credObj.busId=state?.busDetails[0].busId;
+            credObj.date=state.route.date;
+            credObj.seats=selectedSeats;
+            credObj.source=state.route.source;
+            credObj.time=state.busDetails[0].stTime;
+            credObj.destination=state.route.destination;
+            console.log(credObj);
+            const result=await axios.post('http://localhost:4000/user/tickethistory',credObj);
+            console.log(result)
+            if(result.data.message==="tickets added"){
+                navigate('/user/tickethistory');
+            }
         }
     };
 
