@@ -51,7 +51,7 @@ userApp.post('/login',expressAsyncHandler(async(req,res)=>{
             res.send({message:'user not exists'});
         }
     }catch(err){
-        res.send({mesaage:'error occured',payLoad:err.message});
+        res.send({message:'error occured',payLoad:err.message});
     }
 }))
 
@@ -306,6 +306,17 @@ userApp.post('/tickethistory',expressAsyncHandler(async(req,res)=>{
         res.send({message:"tickets added",payLoad:result})
     }catch(err){
         res.send({message:"error occurred",payLoad:err.message})
+    }
+}))
+
+userApp.post('/gettickets',expressAsyncHandler(async(req,res)=>{
+    try{
+        const userId=req.body.userId;
+        const dbres=await ticketModel.find({userId:userId});
+        res.send({message:"history found",payLoad:dbres});
+    }catch(err){
+        res.send({message:"error occurred",payLoad:err.message})
+        mesaage
     }
 }))
 
