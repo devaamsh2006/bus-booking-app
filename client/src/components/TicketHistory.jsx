@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { userDetails } from '../context/UserAuthentication'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function TicketHistory() {
   const { currentUser } = useContext(userDetails);
   const [tickets, settickets] = useState([]);
+  const navigate=useNavigate();
 
   const gethistory = async() => {
     const res = await axios.post('http://localhost:4000/user/gettickets', { userId: currentUser.userId });
@@ -14,6 +16,18 @@ function TicketHistory() {
   useEffect(() => {
     gethistory();
   }, [])
+
+  const cancelticket=async(credObj)=>{
+    credObj.action='cancel';
+    credObj.selectedSeats=credObj.seats;
+    const res=await axios.put('http://localhost:4000/user/book',credObj);
+    if(res.data.message==="Tickets cancelled successfully"){
+      const result=await axios.post('http://localhost:4000/user/cancelticket',credObj);
+      if(result.data.message==='cancelled successfully'){
+        gethistory();
+      }
+    }
+  }
 
   return (
     <div className='flex z-10 flex-col min-h-[80vh] p-5 gap-5 bg-gray-50'>
@@ -83,7 +97,7 @@ function TicketHistory() {
               <div className='text-gray-600 text-sm'>
                 Bus ID: <span className='font-medium'>{ticket.busId}</span>
               </div>
-              <button className='px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors'>
+              <button className='px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors' onClick={()=>cancelticket(ticket)}>
                 Cancel Ticket
               </button>
             </div>

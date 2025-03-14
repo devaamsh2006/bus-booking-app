@@ -320,4 +320,14 @@ userApp.post('/gettickets',expressAsyncHandler(async(req,res)=>{
     }
 }))
 
+userApp.post('/cancelticket',expressAsyncHandler(async(req,res)=>{
+    try{
+        const credObj=req.body;
+        const dbres=await ticketModel.deleteOne({userId:credObj.userId,busId:credObj.busId,date:credObj.date});
+        res.send({message:'cancelled successfully',payLoad:dbres});
+    }catch(err){
+        res.send({message:"error occurred",payLoad:err.message});
+    }
+}))
+
 module.exports=userApp;
