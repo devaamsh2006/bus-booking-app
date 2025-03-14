@@ -1,15 +1,37 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { userDetails } from '../context/UserAuthentication';
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 import { RiBusLine } from "react-icons/ri";
+import axios from 'axios';
 
 function ProfileOfAuthor() {
-  const [salary,setSalary]=useState(0);
+  const [operatordrivers,setDrivers]=useState([]);
+  const [driver,setDriver]=useState({});
   const noOfBuses=0;
   const {currentUser}=useContext(userDetails);
-  console.log(currentUser);
+
+  useEffect(()=>{
+    if(currentUser.userType==='operator'){
+    handleDrivers();
+    }
+    if(currentUser.userType==='driver'){
+    handleDriver();
+    }
+  },[])
+
+
+  const handleDrivers=async()=>{
+    const res=await axios.post('http://localhost:4000/operator/drivers',currentUser);
+    setDrivers(res.data.payLoad);
+  }
+
+  const handleDriver=async()=>{
+    const res=await axios.post('http://localhost:4000/driver/login',currentUser)
+    setDriver(res.data.payLoad?.occupied?.[0]);
+  }
+
   return (
     <div className='w-full relative p-5 flex flex-col gap-5 h-[75vh]'>
       <div className='flex justify-center gap-4 items-center w-full z-10'>
@@ -28,18 +50,28 @@ function ProfileOfAuthor() {
       <h1 className='flex items-center gap-2 z-10'><CiLocationOn className='scale-[1.5]'/>{currentUser.location}</h1>
       {
         currentUser.userType==='operator' &&
-        <div>
+        <>
           <h1 className='text-2xl font-semibold z-10'>Bus stats:</h1>
           <h1 className='flex items-center gap-2 z-10'><RiBusLine className='scale-[1.5]'/>Buses Registered:{noOfBuses}</h1>
-        </div>
+          {
+           operatordrivers[0]?.drivers?.map((driver)=>{
+            return (
+              <>
+              <h1 className='flex items-center gap-2 z-10'>{driver.fullName}</h1>
+              <h1 className='flex items-center gap-2 z-10'>{driver.drivername}</h1>
+              <h1 className='flex items-center gap-2 z-10'>{driver.salary}</h1>
+              </>
+            )
+           })
+          }
+        </>
       }
       {
         currentUser.userType==='driver' &&
-        <div>
+        <>
         <h1 className='text-2xl font-semibold z-10'>Bus stats:</h1>
-        <h1 className='flex items-center gap-2 z-10'><RiBusLine className='scale-[1.5]'/>No.of Buses Assigned:{noOfBuses}</h1>
-        <h1 className='flex items-center gap-2 z-10'>Salary:{salary}</h1>
-        </div>
+        <h1 className='flex items-center gap-2 z-10'>Salary:{driver?.salary}</h1>
+        </>
       }
       
     </div>

@@ -66,16 +66,21 @@ operatorApp.post('/login',expressAsyncHandler(async(req,res)=>{
     }
 }))
 
+operatorApp.get('/getdrivers',expressAsyncHandler(async(req,res)=>{
+    try{
+        const dbRes=await driverModel.find();
+        res.send({message:"drivers found",payLoad:dbRes});
+    }catch(err){
+        res.send({message:err.message});
+    }
+}))
+
 //for getting drivers of operator
 operatorApp.post('/drivers',expressAsyncHandler(async(req,res)=>{
     try{
     const credObj=req.body.email;
-    const dboperator=await operatorModel.findOne({username:credObj},{drivers:1,_id:0});
-    if(dboperator.drivers.length===0){
-        res.send({message:"No drivers"});
-    }else{
-        res.send({message:"drivers found",payLoad:dboperator});
-    }
+    const dboperator=await operatorModel.find({username:credObj});
+    res.send({message:"drivers found",payLoad:dboperator});
     }catch(err){
         res.send({message:"error occurred",payLoad:err.message});
     }   
@@ -96,7 +101,7 @@ operatorApp.put('/adddrivers',expressAsyncHandler(async(req,res)=>{
                 { $push: { pending: { operatorname: credObj.username,salary:credObj.salary } } },
                 { returnOriginal:false } 
             );
-            res.send({message:"driver added",payLoad:result});
+            res.send({message:"driver requested",payLoad:result});
             }else{
                 res.send({message:"request already sent"});
             }

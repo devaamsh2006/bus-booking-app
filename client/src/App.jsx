@@ -12,7 +12,7 @@ import Driver from './components/Driver';
 import OperatorProfile from './components/OperatorProfile';
 import DriverBuses from './components/DriverBuses';
 import ProfileOfAuthor from './components/ProfileOfAuthor';
-import RequestsOfOperator from './components/RequestsOfOperator';
+import RequestsOfDriver from './components/RequestsOfDriver';
 import FollowOfOperator from './components/FollowOfOperator';
 import { userDetails } from './context/UserAuthentication';
 import './App.css';
@@ -76,10 +76,10 @@ function App() {
                 path:':operatorId',
                 element:<ProfileOfAuthor />
               },
-              {
-                path:'accept',
-                element:<RequestsOfOperator />
-              },
+              // {
+              //   path:'accept',
+              //   element:<RequestsOfOperator />
+              // },
               {
                 path:'follow',
                 element:<FollowOfOperator />
@@ -116,12 +116,12 @@ function App() {
             },
             {
               path:'accept',
-              element:<RequestsOfOperator />
-            },
-            {
-              path:'follow',
-              element:<FollowOfOperator />
+              element:<RequestsOfDriver />
             }
+            // {
+            //   path:'follow',
+            //   element:<FollowOfOperator />
+            // }
           ]
           },
           {

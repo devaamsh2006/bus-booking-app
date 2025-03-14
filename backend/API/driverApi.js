@@ -65,7 +65,7 @@ driverApp.post('/login',expressAsyncHandler(async(req,res)=>{
 }))
 
 //accepting or rejecting operator request
-driverApp.put('/operators',verifyToken,expressAsyncHandler(async(req,res)=>{
+driverApp.put('/operators',expressAsyncHandler(async(req,res)=>{
     try{
         const acceptedOrRejected=req.body;
         const result=await driverModel.findOne({username:acceptedOrRejected.username});
@@ -75,11 +75,11 @@ driverApp.put('/operators',verifyToken,expressAsyncHandler(async(req,res)=>{
         let temp=await driverModel.findOneAndUpdate({username:acceptedOrRejected.username},{$set:{pending:operatorsinList}});
         if(acceptedOrRejected.request==='add'){
             let final=await driverModel.findOneAndUpdate({username:acceptedOrRejected.username},{$push:{occupied:added}},{returnOriginal:false});
-            let updatedoperator=await operatorModel.findOneAndUpdate({username:acceptedOrRejected.operatorname},{$push:{drivers:{drivername:acceptedOrRejected.username,salary:added[0].salary}}});
-            res.send({message:"operator finalized",payLoad:final});
+            let updatedoperator=await operatorModel.findOneAndUpdate({username:acceptedOrRejected.operatorname},{$push:{drivers:{drivername:acceptedOrRejected.fullName,email:acceptedOrRejected.email,salary:added[0].salary}}});
+            return res.send({message:"operator finalized",payLoad:final});
         }else{
             let final=await driverModel.findOne({username:acceptedOrRejected.username});
-            res.send({message:"operator deleted",payLoad:final});
+            return res.send({message:"operator deleted",payLoad:final});
         }
     }catch(err){
         res.send({message:"error occured",payLoad:err.message});

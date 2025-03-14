@@ -62,6 +62,7 @@ const operatorSchema=new mongoose.Schema(
             type:[
                 {
                     drivername:{type:String,required:true},
+                    email:{type:String,required:true},
                     salary:{type:Number,required:true}
                 }
             ],
