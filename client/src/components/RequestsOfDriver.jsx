@@ -23,13 +23,15 @@ function RequestsOfDriver() {
   const addOperator = async (credObj) => {
     try {
       let details = {
-        username: currentUser.fullName,
-        email:currentUser.email,
+        username:currentUser.email,
+        fullName: currentUser.fullName,
         operatorname: credObj.operatorname,
         request: 'add'
       };
+
       
       const res = await axios.put('http://localhost:4000/driver/operators', details);
+      console.log(res)
       if (res.data.message === 'operator finalized') {
         navigate(`/driver/${currentUser.userId}`);
       }

@@ -53,14 +53,14 @@ function ProfileOfAuthor() {
         <>
           <h1 className='text-2xl font-semibold z-10'>Bus stats:</h1>
           <h1 className='flex items-center gap-2 z-10'><RiBusLine className='scale-[1.5]'/>Buses Registered:{noOfBuses}</h1>
+          <h1 className='text-2xl font-semibold z-10'>Drivers</h1>
           {
            operatordrivers[0]?.drivers?.map((driver)=>{
             return (
-              <>
-              <h1 className='flex items-center gap-2 z-10'>{driver.fullName}</h1>
+              <div className='flex gap-3'>
               <h1 className='flex items-center gap-2 z-10'>{driver.drivername}</h1>
               <h1 className='flex items-center gap-2 z-10'>{driver.salary}</h1>
-              </>
+              </div>
             )
            })
           }
