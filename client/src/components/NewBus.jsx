@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { userDetails } from '../context/UserAuthentication';
 import axios from 'axios';
@@ -8,6 +8,30 @@ function NewBus() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const {currentUser}=useContext(userDetails);
   const navigate=useNavigate();
+  const [drivers,setDrivers]=useState([]);
+
+  const handleDrivers=async()=>{
+    const res=await axios.post('http://localhost:4000/operator/login',currentUser)
+    setDrivers(res.data.payLoad.drivers);
+  }
+
+  useEffect(()=>{
+    handleDrivers();
+  },[])
+
+  const [selectedDriverEmail, setSelectedDriverEmail] = useState("");
+
+  // Handler to get email when a driver is selected
+  const handleDriverChange = (event) => {
+    const selectedDriverName = event.target.value;
+    const driver = drivers.find(d => d.drivername === selectedDriverName);
+    if (driver) {
+      setSelectedDriverEmail(driver.email);
+    } else {
+      setSelectedDriverEmail("");
+    }
+  };
+
   async function handlenewBus(credObj) {
     const newbus={};
     newbus.busId=Date.now();
@@ -25,7 +49,7 @@ function NewBus() {
     newbus.rows=Number(credObj.rows);
     newbus.username=currentUser.email;
     newbus.stTime=credObj.stTime;
-    newbus.drivername=credObj.drivername;
+    newbus.drivername=selectedDriverEmail;
     newbus.busNo=credObj.busNo;
     newbus.cancel = credObj.cancel === 'true';
     newbus.insurance = credObj.insurance === 'true';
@@ -149,13 +173,14 @@ function NewBus() {
 
           <div className="flex flex-col space-y-2">
             <label htmlFor="drivername" className="text-lg font-medium">Driver Name</label>
-            <input
-              type="text"
-              id="drivername"
-              placeholder="Enter Driver Name"
-              {...register('drivername', { required: 'Please provide a valid driver name' })}
-              className="border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-500 w-full rounded-xl p-3"
-            />
+     <input list="drivername" onChange={handleDriverChange} className="w-1/2 p-4 rounded-xl focus:outline-none focus:border-slate-800 
+                   border-2 border-slate-500"  placeholder="Select Driver" />
+      <datalist id="drivername">
+        {drivers.map((driver, index) => (
+          <option key={index} value={driver.drivername} />
+        ))}
+      </datalist>
+
             {errors.drivername && <span className="text-red-500 text-sm">{errors.drivername.message}</span>}
           </div>
 

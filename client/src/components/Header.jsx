@@ -44,7 +44,13 @@ function Header() {
             </>
             }
             {
-            currentUser.userType==='driver'&&<><NavLink to={`driver/${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Driver</NavLink></>}
+            currentUser.userType==='driver'&&
+            <>
+            <NavLink to={`driver/${currentUser.userId}`} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>Driver</NavLink>
+            <NavLink to='/driver/buses' className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2' >Buses</NavLink>
+            </>
+            }
+
             <button onClick={handleSignOut} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>SignOut</button>
             </>
             :<>

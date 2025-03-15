@@ -76,10 +76,6 @@ function App() {
                 path:':operatorId',
                 element:<ProfileOfAuthor />
               },
-              // {
-              //   path:'accept',
-              //   element:<RequestsOfOperator />
-              // },
               {
                 path:'follow',
                 element:<FollowOfOperator />
@@ -118,11 +114,11 @@ function App() {
               path:'accept',
               element:<RequestsOfDriver />
             }
-            // {
-            //   path:'follow',
-            //   element:<FollowOfOperator />
-            // }
           ]
+          },
+          {
+            path:'driver/buses',
+            element:<DriverBuses />
           },
           {
             path:'user',
