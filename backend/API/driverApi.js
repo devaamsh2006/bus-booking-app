@@ -69,13 +69,14 @@ driverApp.put('/operators',expressAsyncHandler(async(req,res)=>{
     try{
         const acceptedOrRejected=req.body;
         const result=await driverModel.findOne({username:acceptedOrRejected.username});
+        console.log(result.pending);
         let operatorsinList=result.pending;
         let index=operatorsinList.findIndex(element=>element.operatorname===acceptedOrRejected.operatorname);
         const added=operatorsinList.splice(index,1);
         let temp=await driverModel.findOneAndUpdate({username:acceptedOrRejected.username},{$set:{pending:operatorsinList}});
         if(acceptedOrRejected.request==='add'){
             let final=await driverModel.findOneAndUpdate({username:acceptedOrRejected.username},{$push:{occupied:added}},{returnOriginal:false});
-            let updatedoperator=await operatorModel.findOneAndUpdate({username:acceptedOrRejected.operatorname},{$push:{drivers:{drivername:acceptedOrRejected.fullName,email:acceptedOrRejected.email,salary:added[0].salary}}});
+            let updatedoperator=await operatorModel.findOneAndUpdate({username:acceptedOrRejected.operatorname},{$push:{drivers:{drivername:acceptedOrRejected.fullName,email:acceptedOrRejected.username,salary:added[0].salary}}});
             return res.send({message:"operator finalized",payLoad:final});
         }else{
             let final=await driverModel.findOne({username:acceptedOrRejected.username});
