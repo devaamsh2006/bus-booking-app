@@ -23,6 +23,7 @@ import TicketHistory from './components/TicketHistory';
 import BusesAvailable from './components/BusesAvailable';
 import AddTrips from './components/AddTrips';
 import BookBus from './components/BookBus';
+import UserDetails from './components/UserDetails';
 
 function App() {
   const {currentuser}=useContext(userDetails);
@@ -119,6 +120,10 @@ function App() {
           {
             path:'driver/buses',
             element:<DriverBuses />
+          },
+          {
+            path:'/driver/:busId/userdetails',
+            element:<UserDetails />
           },
           {
             path:'user',

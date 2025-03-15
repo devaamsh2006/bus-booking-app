@@ -88,10 +88,10 @@ driverApp.put('/operators',expressAsyncHandler(async(req,res)=>{
 }))
 
 //getting buses
-driverApp.get('/buses',expressAsyncHandler(async(req,res)=>{
+driverApp.post('/buses',expressAsyncHandler(async(req,res)=>{
     try{
-        const driver=req.body.username;
-        const result=await newBusModel.findOne({drivername:driver});
+        const driver=req.body.email;
+        const result=await newBusModel.find({drivername:driver});
         res.send({message:"buses found",payLoad:result});
     }catch(err){
         res.send({message:"error occurred",payLoad:err.message});
@@ -99,7 +99,7 @@ driverApp.get('/buses',expressAsyncHandler(async(req,res)=>{
 }))
 
 //getting users info of bus for driver
-driverApp.get('/passengers',expressAsyncHandler(async(req,res)=>{
+driverApp.post('/passengers',expressAsyncHandler(async(req,res)=>{
     try{
         const Details=req.body;
         const busDetails=await busInfoCollection.find({busId:Details.busId,date:Details.date});
