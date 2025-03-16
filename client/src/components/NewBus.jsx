@@ -11,7 +11,7 @@ function NewBus() {
   const [drivers,setDrivers]=useState([]);
 
   const handleDrivers=async()=>{
-    const res=await axios.post('http://localhost:4000/operator/login',currentUser)
+    const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/operator/login',currentUser)
     setDrivers(res.data.payLoad.drivers);
   }
 
@@ -53,7 +53,7 @@ function NewBus() {
     newbus.busNo=credObj.busNo;
     newbus.cancel = credObj.cancel === 'true';
     newbus.insurance = credObj.insurance === 'true';
-    const res=await axios.post('http://localhost:4000/operator/newbus',newbus);
+    const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/operator/newbus',newbus);
     console.log(res)
     if(res.data.message==='bus added'){
       navigate(`/operator/buses/${currentUser.userId}`);

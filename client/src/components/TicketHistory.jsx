@@ -9,7 +9,7 @@ function TicketHistory() {
   const navigate=useNavigate();
 
   const gethistory = async() => {
-    const res = await axios.post('http://localhost:4000/user/gettickets', { userId: currentUser.userId });
+    const res = await axios.post('https://bus-booking-app-1-okbp.onrender.com/user/gettickets', { userId: currentUser.userId });
     settickets(res.data.payLoad);
   }
   
@@ -20,9 +20,9 @@ function TicketHistory() {
   const cancelticket=async(credObj)=>{
     credObj.action='cancel';
     credObj.selectedSeats=credObj.seats;
-    const res=await axios.put('http://localhost:4000/user/book',credObj);
+    const res=await axios.put('https://bus-booking-app-1-okbp.onrender.com/user/book',credObj);
     if(res.data.message==="Tickets cancelled successfully"){
-      const result=await axios.post('http://localhost:4000/user/cancelticket',credObj);
+      const result=await axios.post('https://bus-booking-app-1-okbp.onrender.com/user/cancelticket',credObj);
       if(result.data.message==='cancelled successfully'){
         gethistory();
       }

@@ -9,7 +9,7 @@ function BusesAvailable() {
     const [busDetails,setBusDetails]=useState([]);
     const navigate=useNavigate();
     async function getBuses(){
-        const res=await axios.post('http://localhost:4000/user/buses',state);
+        const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/user/buses',state);
         if(res.data.message==='buses found'){
             setBuses(res.data.payLoad);
             setBusDetails(res.data.busDetails);

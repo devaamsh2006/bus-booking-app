@@ -21,13 +21,13 @@ function SignupDetails() {
     credObj.imageUrl=user?.imageUrl;
     credObj.fullName=user?.fullName;
     if(nowuser==='user'){
-      const res=await axios.post('http://localhost:4000/user/signup',{user:credObj}); 
+      const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/user/signup',{user:credObj}); 
       if(res.data.message==='user created'){
         navigate('/');
       }
     }else if(nowuser==='operator'){
       credObj.operatorId=Date.now();      
-      const res=await axios.post('http://localhost:4000/operator/signup',{user:credObj}); 
+      const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/operator/signup',{user:credObj}); 
       console.log(res)
       if(res.data.message==='operator created'){
         navigate('/');
@@ -36,7 +36,7 @@ function SignupDetails() {
       credObj.driverId=Date.now();
       credObj.yearsOfExperience=credObj.experience;
       delete credObj.experience;
-      const res=await axios.post('http://localhost:4000/driver/signup',{user:credObj}); 
+      const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/driver/signup',{user:credObj}); 
       console.log(res);
       if(res.data.message==='driver created'){
         navigate('/');

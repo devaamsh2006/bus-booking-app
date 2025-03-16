@@ -10,7 +10,7 @@ function BusesOfOperator() {
   const navigate=useNavigate();
 
   async function handleBuses(){
-    const res=await axios.post('http://localhost:4000/operator/buses',{username:currentUser.email});
+    const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/operator/buses',{username:currentUser.email});
     if(res.data.message==='buses found'){
       setBuses(res.data.payLoad);
     }

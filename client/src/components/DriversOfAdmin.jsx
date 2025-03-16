@@ -8,7 +8,7 @@ function DriversOfAdmin() {
     const navigate=useNavigate();
   
     const handleDrivers=async()=>{
-        const res=await axios.get('http://localhost:4000/admin/driversofAdmin');
+        const res=await axios.get('https://bus-booking-app-1-okbp.onrender.com/admin/driversofAdmin');
         setDrivers(res.data.payLoad);
     }
   

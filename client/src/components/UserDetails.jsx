@@ -27,7 +27,7 @@ function UserDetails() {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/driver/passengers",
+        "https://bus-booking-app-1-okbp.onrender.com/driver/passengers",
         credObj
       );
       setUsers(res.data.payLoad);

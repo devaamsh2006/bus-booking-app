@@ -14,14 +14,14 @@ function OperatorDetails() {
     const navigate=useNavigate();
 
     const addOperator=async()=>{
-        const res=await axios.put('http://localhost:4000/admin/accept',{accept:true,username:state.username});
+        const res=await axios.put('https://bus-booking-app-1-okbp.onrender.com/admin/accept',{accept:true,username:state.username});
         if(res.data.message==='operator accepted'){
             navigate('/admin/operators');
         }
     }
 
     const blockOrUnblockOperator=async()=>{
-        const res=await axios.put('http://localhost:4000/admin/block',state);
+        const res=await axios.put('https://bus-booking-app-1-okbp.onrender.com/admin/block',state);
         res.data.payLoad.userType='operator';
         if(res.data.message==='operation done'){
             navigate(`/admin/operators/${state.operatorId}`,{state:res.data.payLoad});

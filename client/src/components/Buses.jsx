@@ -11,7 +11,7 @@ function Buses() {
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
-        const routePresent = await axios.get('http://localhost:4000/user/routes');
+        const routePresent = await axios.get('https://bus-booking-app-1-okbp.onrender.com/user/routes');
         setRoutes(routePresent.data.payLoad);
       } catch (error) {
         console.error("Error fetching routes:", error);

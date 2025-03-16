@@ -10,7 +10,7 @@ function AddTrips() {
 
     async function handletrips(credObj){
         credObj.busId=state.busId;
-        const res=await axios.post('http://localhost:4000/operator/addbus',credObj);
+        const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/operator/addbus',credObj);
         if(res.data.message==='details added'){
             setPresentStatus('Trips Added Successfully');
         }else{

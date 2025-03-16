@@ -16,7 +16,7 @@ function BookBus() {
     const handleSeats = async () => {
         try {
             state.route.busId = state.busDetails[0]?.busId;
-            const res = await axios.post('http://localhost:4000/user/availableSeats', state.route);
+            const res = await axios.post('https://bus-booking-app-1-okbp.onrender.com/user/availableSeats', state.route);
             setAvailableSeats(res.data.availableSeats); // Fixed missing `data`
         } catch (err) {
             console.error("Error fetching available seats", err);
@@ -47,7 +47,7 @@ function BookBus() {
             userId: currentUser.userId,
             action: "book"
         };
-        const res = await axios.put('http://localhost:4000/user/book', details);
+        const res = await axios.put('https://bus-booking-app-1-okbp.onrender.com/user/book', details);
         if (res.data.message === "Tickets booked successfully") {
             let credObj={};
             credObj.userId=currentUser.userId;
@@ -58,7 +58,7 @@ function BookBus() {
             credObj.time=state.busDetails[0].stTime;
             credObj.destination=state.route.destination;
             console.log(credObj);
-            const result=await axios.post('http://localhost:4000/user/tickethistory',credObj);
+            const result=await axios.post('https://bus-booking-app-1-okbp.onrender.com/user/tickethistory',credObj);
             console.log(result)
             if(result.data.message==="tickets added"){
                 navigate('/user/tickethistory');

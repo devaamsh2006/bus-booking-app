@@ -10,7 +10,7 @@ function OperatorBuses() {
   useEffect(() => {
     async function handleOperator() {
       try {
-        const res = await axios.post('http://localhost:4000/operator/login', currentUser);
+        const res = await axios.post('https://bus-booking-app-1-okbp.onrender.com/operator/login', currentUser);
         console.log('Operator Status:', res.data);
         setStatus(res.data.payLoad);
       } catch (error) {

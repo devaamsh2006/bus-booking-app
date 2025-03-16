@@ -13,7 +13,7 @@ function DriverBuses() {
 
   const handleBuses=async()=>{
     console.log(currentUser);
-      const res=await axios.post('http://localhost:4000/driver/buses',currentUser);
+      const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/driver/buses',currentUser);
       setBuses(res.data.payLoad);
   }
 

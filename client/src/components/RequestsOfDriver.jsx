@@ -12,7 +12,7 @@ function RequestsOfDriver() {
 
   const handleOperators = async () => {
     try {
-      const res = await axios.post('http://localhost:4000/driver/login', currentUser);
+      const res = await axios.post('https://bus-booking-app-1-okbp.onrender.com/driver/login', currentUser);
       setRequests(res.data.payLoad?.pending || []);
     } catch (error) {
       console.error("Error fetching requests:", error);
@@ -30,7 +30,7 @@ function RequestsOfDriver() {
       };
 
       
-      const res = await axios.put('http://localhost:4000/driver/operators', details);
+      const res = await axios.put('https://bus-booking-app-1-okbp.onrender.com/driver/operators', details);
       console.log(res)
       if (res.data.message === 'operator finalized') {
         navigate(`/driver/${currentUser.userId}`);
@@ -48,7 +48,7 @@ function RequestsOfDriver() {
         request: 'remove'
       };
       
-      const res = await axios.put('http://localhost:4000/driver/operators', details);
+      const res = await axios.put('https://bus-booking-app-1-okbp.onrender.com/driver/operators', details);
       if (res.data.message === 'operator deleted') {
         navigate(`/driver/${currentUser.userId}`);
       }

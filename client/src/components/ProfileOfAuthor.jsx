@@ -23,12 +23,12 @@ function ProfileOfAuthor() {
 
 
   const handleDrivers=async()=>{
-    const res=await axios.post('http://localhost:4000/operator/drivers',currentUser);
+    const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/operator/drivers',currentUser);
     setDrivers(res.data.payLoad);
   }
 
   const handleDriver=async()=>{
-    const res=await axios.post('http://localhost:4000/driver/login',currentUser)
+    const res=await axios.post('https://bus-booking-app-1-okbp.onrender.com/driver/login',currentUser)
     setDriver(res.data.payLoad?.occupied?.[0]);
   }
 

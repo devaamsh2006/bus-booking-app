@@ -10,7 +10,7 @@ function FollowOfOperator() {
   const [drivers,setdrivers]=useState([]);
 
   const handledrivers=async()=>{
-      const res=await axios.get('http://localhost:4000/operator/getdrivers');
+      const res=await axios.get('https://bus-booking-app-1-okbp.onrender.com/operator/getdrivers');
       setdrivers(res.data.payLoad);
   }
 
@@ -19,7 +19,7 @@ function FollowOfOperator() {
     details.username=currentUser.email;
     details.drivername=credObj.username;
     details.salary=Number(salary.salary);
-    const res=await axios.put('http://localhost:4000/operator/adddrivers',details);
+    const res=await axios.put('https://bus-booking-app-1-okbp.onrender.com/operator/adddrivers',details);
     console.log(res)
     if(res.data.message==="driver requested"){
       alert('request sent');

@@ -8,7 +8,7 @@ function OperatorsOfAdmin() {
   const navigate=useNavigate();
 
   const handleOperators=async()=>{
-      const res=await axios.get('http://localhost:4000/admin/operatorsofAdmin');
+      const res=await axios.get('https://bus-booking-app-1-okbp.onrender.com/admin/operatorsofAdmin');
       setOperators(res.data.payLoad);
   }
 
