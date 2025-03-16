@@ -167,6 +167,10 @@ function App() {
               {
                 path:'operators/:operatorId',
                 element:<OperatorDetails />
+              },
+              {
+                path:'drivers/:driverId',
+                element:<OperatorDetails />
               }
             ]
           }

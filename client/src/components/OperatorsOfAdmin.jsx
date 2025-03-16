@@ -7,17 +7,17 @@ function OperatorsOfAdmin() {
 
   const navigate=useNavigate();
 
-  const handleRequests=async()=>{
-      const res=await axios.get('http://localhost:4000/admin/operators');
+  const handleOperators=async()=>{
+      const res=await axios.get('http://localhost:4000/admin/operatorsofAdmin');
       setOperators(res.data.payLoad);
   }
 
   useEffect(()=>{
-      handleRequests();
+      handleOperators();
   },[])
 
   const handleOperator=(operator)=>{
-    console.log(operator);
+    operator.userType='operator';
     navigate(`/admin/operators/${operator.operatorId}`,{state:operator})
   }
 
