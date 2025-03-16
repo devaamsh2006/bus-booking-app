@@ -37,7 +37,6 @@ function App() {
       element:<RootLayout />,
       path:'',
       children:[
-        
         {
           path:'signup-details',
           element:<SignupDetails />

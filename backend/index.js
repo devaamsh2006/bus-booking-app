@@ -7,6 +7,8 @@ const path=require('path');
 //selecting port
 const port=process.env.PORT||5000;
 
+const Mongodb_Url=process.env.VITE_MONGO_URL
+
 //importing api Apps
 const userApp = require('./API/userApi');
 const driverApp = require('./API/driverApi');
@@ -21,7 +23,7 @@ app.use('/operator',operatorApp);
 app.use('/admin',adminApp)
 
 //connecting to database
-mongoose.connect('mongodb://localhost:27017/busapp')
+mongoose.connect(Mongodb_Url)
 .then(()=>{
 
     //listening on the port

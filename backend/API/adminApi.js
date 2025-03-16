@@ -12,6 +12,7 @@ const adminModel=require('../SCHEMAS/adminSchema');
 
 //importing operator collection
 const operatorModel=require('../SCHEMAS/operatorSchema');
+const driverModel = require('../SCHEMAS/driverSchema');
 
 adminApp.get('/admins',expressAsyncHandler(async(req,res)=>{
     res.send({message:"admin Api"});
@@ -50,7 +51,7 @@ adminApp.post('/login',expressAsyncHandler(async(req,res)=>{
     }
 }))
 
-adminApp.get('/requests',expressAsyncHandler(async(req,res)=>{
+adminApp.get('/requestsofAdmin',expressAsyncHandler(async(req,res)=>{
     try{
         const dbres=await operatorModel.find({accepted:false});
         res.send({message:'found requests',payLoad:dbres});
@@ -59,10 +60,19 @@ adminApp.get('/requests',expressAsyncHandler(async(req,res)=>{
     }
 }))
 
-adminApp.get('/operators',expressAsyncHandler(async(req,res)=>{
+adminApp.get('/operatorsofAdmin',expressAsyncHandler(async(req,res)=>{
     try{
         const dbres=await operatorModel.find({accepted:true});
         res.send({message:'found requests',payLoad:dbres});
+    }catch(err){
+        res.send({message:'error occurred',payLoad:err.message});
+    }
+}))
+
+adminApp.get('/driversofAdmin',expressAsyncHandler(async(req,res)=>{
+    try{
+        const dbres=await driverModel.find();
+        res.send({message:'found drivers',payLoad:dbres});
     }catch(err){
         res.send({message:'error occurred',payLoad:err.message});
     }
