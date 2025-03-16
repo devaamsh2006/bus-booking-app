@@ -8,3 +8,14 @@ Content-Type: application/json
     "username":"devamsh2006@gmail.com",
     "accepted":true
 }
+
+###
+post http://localhost:4000/admin/signup
+Content-Type: application/json
+
+{
+    "email":"devamshgangi@gmail.com",
+    "adminId":"{{$timestamp}}",
+    "phoneno":"8106993581",
+    "username":"Devaamsh"
+}

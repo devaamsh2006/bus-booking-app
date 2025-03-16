@@ -68,7 +68,7 @@ operatorApp.post('/login',expressAsyncHandler(async(req,res)=>{
 
 operatorApp.get('/getdrivers',expressAsyncHandler(async(req,res)=>{
     try{
-        const dbRes=await driverModel.find();
+        const dbRes=await driverModel.find({ occupied: { $size: 0 } });
         res.send({message:"drivers found",payLoad:dbRes});
     }catch(err){
         res.send({message:err.message});

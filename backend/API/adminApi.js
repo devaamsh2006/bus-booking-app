@@ -38,7 +38,7 @@ adminApp.post('/signup',expressAsyncHandler(async(req,res)=>{
 adminApp.post('/login',expressAsyncHandler(async(req,res)=>{
     try{
         const credObj=req.body;
-        const dboperator=await adminModel.findOne({username:credObj.username});
+        const dboperator=await adminModel.findOne({email:credObj.email});
         if(dboperator===null){
             res.send({message:"admin not exists"})
         }else{
@@ -50,14 +50,42 @@ adminApp.post('/login',expressAsyncHandler(async(req,res)=>{
     }
 }))
 
+adminApp.get('/requests',expressAsyncHandler(async(req,res)=>{
+    try{
+        const dbres=await operatorModel.find({accepted:false});
+        res.send({message:'found requests',payLoad:dbres});
+    }catch(err){
+        res.send({message:'error occurred',payLoad:err.message});
+    }
+}))
+
+adminApp.get('/operators',expressAsyncHandler(async(req,res)=>{
+    try{
+        const dbres=await operatorModel.find({accepted:true});
+        res.send({message:'found requests',payLoad:dbres});
+    }catch(err){
+        res.send({message:'error occurred',payLoad:err.message});
+    }
+}))
+
 adminApp.put('/accept',expressAsyncHandler(async(req,res)=>{
     const details=req.body;
-    if(details.accepted===true){
+    if(details.accept===true){
         const result=await operatorModel.findOneAndUpdate({username:details.username},{$set:{accepted:true}},{returnOriginal:false});
         res.send({message:"operator accepted",payLoad:result});
     }else{
         await operatorModel.findOneAndDelete({username:details.username});
         re.send({message:"operator rejected"});
+    }
+}))
+
+adminApp.put('/block',expressAsyncHandler(async(req,res)=>{
+    try{
+        const details=req.body;
+        const result=await operatorModel.findOneAndUpdate({username:details.username},{$set:{blocked:!details.blocked}},{returnOriginal:false});
+        res.send({message:'operation done',payLoad:result});
+    }catch(error){
+        res.send({message:"error ocurred",payLoad:error.message});
     }
 }))
 

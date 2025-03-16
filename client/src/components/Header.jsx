@@ -50,6 +50,10 @@ function Header() {
             <NavLink to='/driver/buses' className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2' >Buses</NavLink>
             </>
             }
+            {
+              currentUser.userType==='admin' &&
+              <NavLink to='admin/requests' className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2' >Profile</NavLink>
+            }
 
             <button onClick={handleSignOut} className='p-2 rounded-md text-black hover:bg-slate-200 flex justify-center items-center gap-2'>SignOut</button>
             </>

@@ -24,6 +24,11 @@ import BusesAvailable from './components/BusesAvailable';
 import AddTrips from './components/AddTrips';
 import BookBus from './components/BookBus';
 import UserDetails from './components/UserDetails';
+import Admin from './components/Admin';
+import RequestsOfAdmin from './components/RequestsOfAdmin';
+import OperatorsOfAdmin from './components/OperatorsOfAdmin';
+import DriversOfAdmin from './components/DriversOfAdmin';
+import OperatorDetails from './components/OperatorDetails';
 
 function App() {
   const {currentuser}=useContext(userDetails);
@@ -136,6 +141,32 @@ function App() {
               {
                 path:'tickethistory',
                 element:<TicketHistory />
+              }
+            ]
+          },
+          {
+            path:'admin',
+            element:<Admin />,
+            children:[
+              {
+                path:'requests',
+                element:<RequestsOfAdmin />
+              },
+              {
+                path:'operators',
+                element:<OperatorsOfAdmin />
+              },
+              {
+                path:'drivers',
+                element:<DriversOfAdmin />
+              },
+              {
+                path:'requests/:operatorId',
+                element:<OperatorDetails />
+              },
+              {
+                path:'operators/:operatorId',
+                element:<OperatorDetails />
               }
             ]
           }
