@@ -1,63 +1,48 @@
-const exp = require('express');
-const app = exp();
-const cors = require('cors');
+//creating an express application
+const exp=require('express');
+const app=exp();
 require('dotenv').config();
-const mongoose = require('mongoose');
-const path = require('path');
+const mongoose=require('mongoose');
+const path=require('path');
+//selecting port
+const port=process.env.PORT||5000;
 
-// Selecting port
-const port = process.env.PORT || 5000;
-const Mongodb_Url = process.env.MONGO_URL;  // Use correct environment variable
-
-// Enable CORS for frontend domain
-app.use(cors({
-    origin: "https://bus-booking-app-2-8eq4.onrender.com/",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
-// Middleware for JSON requests
-app.use(exp.json());
-
-// Importing API Apps
+//importing api Apps
 const userApp = require('./API/userApi');
 const driverApp = require('./API/driverApi');
 const operatorApp = require('./API/operatorApi');
 const adminApp = require('./API/adminApi');
 
-// Serving frontend static files
-app.use(exp.static(path.join(__dirname, '../client/dist')));
+app.use(exp.static(path.join(__dirname,'../client/dist')));
+//selecting api route
+app.use('/user',userApp);
+app.use('/driver',driverApp);
+app.use('/operator',operatorApp);
+app.use('/admin',adminApp)
 
-// Selecting API routes
-app.use('/user', userApp);
-app.use('/driver', driverApp);
-app.use('/operator', operatorApp);
-app.use('/admin', adminApp);
+//connecting to database
+mongoose.connect('mongodb://localhost:27017/busapp')
+.then(()=>{
 
-// Handle preflight requests
-app.options("*", cors());
-
-// Connecting to the database
-mongoose.connect(Mongodb_Url, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log('✅ DB connection success');
-
-        // Start the server
-        app.listen(port, () => {
-            console.log(`🚀 Server running on PORT ${port}`);
-        });
+    //listening on the port
+    app.listen(port,()=>{
+        console.log(`listening on PORT ${port}`);   
     })
-    .catch(err => {
-        console.error('❌ DB Connection Error:', err);
-    });
 
-// Handle all other requests (Frontend routing)
-app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-});
+    //successful connection
+    console.log('DB connection success');
 
-// Global error handling middleware
-app.use((err, req, res, next) => {
-    console.error("❌ Error:", err.message);
-    res.status(500).send({ message: "Error occurred", problem: err.message });
-});
+})
+//error handling in db connection
+.catch(err=>{
+    console.log(err);
+})
+
+app.use((req,res,next)=>{
+    res.sendFile(path.join(__dirname,'../client/dist/index.html'));
+})
+
+//error handling
+app.use((err,req,res,next)=>{
+    res.send({message:"error occured",problem:err.message});
+})
